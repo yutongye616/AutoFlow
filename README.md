@@ -48,7 +48,7 @@ AutomobileVO model is kept up to date by a poller that syncs the vehicle VIN and
 
 ### The Technician API supports three operations:
 
-GET http://localhost:8080/api/technicians/
+GET http://localhost:8080/api/technicians
 No body is required.
 Example Get Response:
 ```
@@ -61,7 +61,7 @@ Example Get Response:
 ```
 
 Create a Technician: 
-POST http://localhost:8080/api/technicians/
+POST http://localhost:8080/api/technicians
 ```
 {
   "first_name": "Yutong",
@@ -78,7 +78,7 @@ Created a Technician Response:
   "employee_id": 123
 }
 ```
-DELETE http://localhost:8080/api/technicians/<id>/
+DELETE http://localhost:8080/api/technicians/<id>
 Replace <id> with the technician's unique ID.
 ```
 {
@@ -88,7 +88,7 @@ Replace <id> with the technician's unique ID.
 
 ### The Appointment API supports three operations:
 
-GET http://localhost:8080/api/appointments/
+GET http://localhost:8080/api/appointments
 No body is required.
 Example Get Response:
 ```
@@ -109,7 +109,7 @@ Example Get Response:
 ```
 
 Create an Appointment:
-POST http://localhost:8080/api/appointments/
+POST http://localhost:8080/api/appointments
 ```
 {
   "date_time": "2024-02-10T14:00:00Z",
@@ -139,7 +139,7 @@ Created Appointment Response:
 }
 ```
 
-DELETE http://localhost:8080/api/appointments/<id>/
+DELETE http://localhost:8080/api/appointments/<id>
 Replace <id> with the appointment’s unique ID.
 
 ```
@@ -147,11 +147,6 @@ Replace <id> with the appointment’s unique ID.
   "message": "Appointment has been deleted."
 }
 ```
-
-
-
-
-
 
 
 
@@ -177,6 +172,31 @@ Sales are used to keep track of sales that have occurred.
 | List Sales | GET | `http://localhost:8090/api/sales/`
 | Create a Sale | POST | `http://localhost:8090/api/sales/`
 | Delete a Specific Sale | DELETE | `http://localhost:8090/api/sales/<id>/`
+
+
+### The Customer API supports three operations:
+
+GET http://localhost:8090/api/customers/
+No request body required.
+Example Response:
+```
+[
+  {
+    "id": 4,
+    "first_name": "Josh",
+    "last_name": "Elder",
+    "address": "69420 Capitol Hill, Seattle, WA 98102",
+    "phone_number": "1231231234"
+  },
+  {
+    "id": 5,
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "address": "123 Main St, New York, NY 10001",
+    "phone_number": "5555555555"
+  }
+]
+```
 
 To create a customer:
 POST http://localhost:8090/api/customers/
@@ -219,6 +239,45 @@ Created a Salesperson Response:
 }
 ```
 
+DELETE http://localhost:8090/api/customers/4/
+Replace 4 with the actual customer ID you wish to delete.
+Example Response:
+```
+{
+  "message": "Customer has been deleted"
+}
+```
+
+Get a List of Sales
+GET http://localhost:8090/api/sales/
+No request body required.
+Example Response:
+```
+[
+  {
+    "id": 16,
+    "price": 1000000,
+    "automobile": {
+      "id": 4,
+      "vin": "1D7HA18N33J33J665",
+      "sold": false
+    },
+    "salesperson": {
+      "id": 5,
+      "first_name": "Jaik",
+      "last_name": "Ascher",
+      "employee_id": "jascher"
+    },
+    "customer": {
+      "id": 4,
+      "first_name": "Josh",
+      "last_name": "Elder",
+      "address": "69420 Capitol Hill, Seattle, WA 98102",
+      "phone_number": "1231231234"
+    }
+  }
+]
+```
 
 To create a sale: 
 POST http://localhost:8090/api/sales/
@@ -256,13 +315,17 @@ Created a Sale Response:
   }
 ```
 
+Delete a Sale
+DELETE http://localhost:8090/api/sales/16/
+Replace 16 with the actual sale ID you want to delete.
 
-To delete a customer, salesperson, or sale, send a DELETE request to the corresponding URL with the appropriate ID:
+Example Response:
 ```
 {
-http://localhost:8090/api/customers/<id>/
-http://localhost:8090/api/salespeople/<id>/
-http://localhost:8090/api/sales/<id>/
+  "message": "Sale has been deleted"
 }
 ```
-To perform the deletion, simply replace <id> with the actual ID of the customer, salesperson, or sale you want to remove, and send the request using the DELETE method.
+
+
+
+
