@@ -1,6 +1,6 @@
 # CarCar
 
-CarCar is an application that handles both the services and sales aspect of an automotive service and sales center. CarCar manages the aspects of Automobile Inventory (Including Make, Model, and VIN) as well as the Service Appointments, Technicians, Customers, Sales, Salespeople, and the Customers who purchased vehicles.
+CarCar is an application that handles both the services and sales aspects of an automotive service and sales center. CarCar manages the aspects of Automobile Inventory (Including Make, Model, and VIN) as well as the Service Appointments, Technicians, Customers, Sales, Salespeople, and the Customers who purchased vehicles.
 
 #### Team:
 
@@ -9,20 +9,20 @@ CarCar is an application that handles both the services and sales aspect of an a
 
 #### Project Set up 💻
 
-1.Fork the repo at https://gitlab.com/GabrielWickert/project-beta
+1. Fork the repo at https://gitlab.com/GabrielWickert/project-beta
 
-2.Clone your fork to your projects directory.
+2 .Clone your fork to your projects directory.
 
-3.Change directory into the repository directory.
+3. Change directory into the repository directory.
 
-4.Run the follwing commands to set up docker envirnment 
+4. Run the following commands to set up Docker environment 
 
 ```
 docker volume create beta-data
 docker compose build
 docker compose up
 ```
- 5.Enter "localhost:3000" in your web browser to see the front-end of the React app in action, showcasing its dynamic and interactive features.
+ 5. Enter "localhost:3000" in your web browser to see the front-end of the React app in action, showcasing its dynamic and interactive features.
 
 ### Project Diagram
 
@@ -30,9 +30,10 @@ docker compose up
 
 ## Service microservice
 
-The Service microservice features three main models: Technician, AutomobileVo, and Appointment. Although there is an AutomobileVO model that includes a "vin" field within my models file, this field isn't linked as a Foreign Key to the "vin" field in the Appointment model. Within the service directory, there's a subdirectory named "poll," which contains a file called 'poller.py.' This file contains the logic for fetching necessary data (vin and sold fields) from the inventory microservice.
-
-The primary goal of the Service microservice is to keep track of technicians, oversee the status of service appointments, and manage a service history record, enabling searches for appointments using a vehicle's vin number. Furthermore, it enhances functionality by allowing the addition of new technicians and providing an appointment scheduling form to streamline the process of setting up new appointments.
+The Service microservice contains 3 Models;
+Technicians represent service staff identified by a unique employee_id along with their name.
+Appointments capture scheduled service requests with details such as VIN, customer name, date and time, reason for service, VIP status, and the assigned technician. 
+AutomobileVO model is kept up to date by a poller that syncs the vehicle VIN and "sold" status from the Inventory microservice every 60 seconds.
 
 ### Service API Endpoints
 
@@ -45,95 +46,71 @@ The primary goal of the Service microservice is to keep track of technicians, ov
 | Create a Appointment | POST | `http://localhost:8080/api/appointments`
 | Delete a Specific Appointment | DELETE | `http://localhost:8080/api/appointments/<id>/`
 
-### Technicians:
-The Technician API provides three key endpoints to interact with technician data: GET, POST, and DELETE. These endpoints can be accessed using a web browser or API testing tools like Insomnia.
+### The Technician API supports three operations:
 
-In the Technician system, each technician has a special number called an id that is given to them automatically to make sure they can be easily found and not mixed up with others. They also have fields for their first_name and last_name to know their full name. Lastly, there's an employee_id, which is a unique number the company uses to keep track of each technician for things like pay and work schedules.
-
-The 'GET' request retrieve a list of technicians, use the following URL:
-http://localhost:8080/api/technicians/ This 'GET' request does not require a JSON body. Upon submission, you will receive a list of technicians with automatically generated id.
-
-
-```python
-
-Example Response Returned:
+GET http://localhost:8080/api/technicians
+No body is required.
+Example Get Response:
+```
 {
-	"id": 1,
-	"first_name": "John",
-	"last_name": "Ye",
-	"employee_id": 123
+  "id": 1,
+  "first_name": "John",
+  "last_name": "Ye",
+  "employee_id": 123
 }
 ```
 
-
-The 'POST' request add a new technician to the system, use the URL: http://localhost:8080/api/technicians/
-
-To create a new technician:
-```python
-Example JSON Body:
-
+Create a Technician: 
+POST http://localhost:8080/api/technicians
+```
 {
-    "first_name":"Yutong",
-    "last_name":"Ye",
-    "employee_id":123
+  "first_name": "Yutong",
+  "last_name": "Ye",
+  "employee_id": 123
 }
-
-Example Response Returned:
-
+```
+Created a Technician Response:
+```
 {
-	"id": 1,
-	"first_name": "Yutong",
-	"last_name": "Ye",
-	"employee_id": 123
+  "id": 1,
+  "first_name": "Yutong",
+  "last_name": "Ye",
+  "employee_id": 123
+}
+```
+DELETE http://localhost:8080/api/technicians/<id>
+Replace <id> with the technician's unique ID.
+```
+{
+  "message": "Technician has been deleted"
 }
 ```
 
-In the above setup, each technician has a special number called an id that is given to them automatically to make sure they can be easily found and not mixed up with others. They also have fields for their first_name and last_name to know their full name. Lastly, there's an employee_id, which is a unique number the company uses to keep track of each technician for things like pay and work schedules.
+### The Appointment API supports three operations:
 
-The 'DELETE' method delete a technician: http://localhost:8080/api/technicians/id/
-
-To remove a technician from the system, you only need the technician's unique ID. Substitute id in the URL with the actual ID of the technician. 
-
-
-```python
-Example Response Returned:
+GET http://localhost:8080/api/appointments
+No body is required.
+Example Get Response:
+```
 {
-	"message": "Technician has been deleted"
+  "appointments": [
+    {
+      "id": 2,
+      "vin": "1HGBH41JXMN109186",
+      "vip": false,
+      "date_time": "2024-02-10T14:00:00+00:00",
+      "customer": "Jane Smith",
+      "service_reason": "Regular maintenance",
+      "status": "Scheduled",
+      "techname": "John Ye"
+    }
+  ]
 }
 ```
 
-
-### Appointments:
-The Appointment API offers three primary endpoints for managing appointment data: GET, POST, and DELETE. 
-
-In the Appointment system, each service appointment is uniquely identified (id) and includes essential details like the appointment time (date_time), reason (service_reason), and customer name. It's linked to a vehicle (vin) and indicates if the customer is a priority (vip). The assigned technician is identified by an ID, streamlining the scheduling process. This setup efficiently organizes appointments, ensuring accurate service delivery and customer satisfaction, with the system providing concise records of each service event.
-
-The 'GET' request retrieve a list of appointments, use the following URL:
-http://localhost:8080/api/appointments/ This 'GET' request does not require a JSON body. Upon submission, you will receive a list of appointments with automatically generated id.
-
-```python
-Example JSON Body Returned:
-{
-	"appointments": [
-		{
-			"id": 2,
-			"vin": "1HGBH41JXMN109186",
-			"vip": false,
-			"date_time": "2024-02-10T14:00:00+00:00",
-			"customer": "Jane Smith",
-			"service_reason": "Regular maintenance",
-			"status": "Scheduled",
-			"techname": "John Ye"
-		}
-	]
-}
+Create an Appointment:
+POST http://localhost:8080/api/appointments
 ```
-
-The 'POST' request add a new appointments to the system, use the URL: http://localhost:8080/api/appointments/
-
-To create a new appointments:
-```python
-Example JSON Body:
 {
   "date_time": "2024-02-10T14:00:00Z",
   "service_reason": "Regular maintenance",
@@ -143,33 +120,31 @@ Example JSON Body:
   "vip": true,
   "technician": 2
 }
-
-Example Response Returned:
+```
+Created Appointment Response:
+```
 {
-	"appointments": [
-		{
-			"id": 2,
-			"vin": "1HGBH41JXMN109186",
-			"vip": false,
-			"date_time": "2024-02-10T14:00:00+00:00",
-			"customer": "Jane Smith",
-			"service_reason": "Regular maintenance",
-			"status": "Scheduled",
-			"techname": "John Ye"
-		}
-	]
+  "appointments": [
+    {
+      "id": 2,
+      "vin": "1HGBH41JXMN109186",
+      "vip": false,
+      "date_time": "2024-02-10T14:00:00+00:00",
+      "customer": "Jane Smith",
+      "service_reason": "Regular maintenance",
+      "status": "Scheduled",
+      "techname": "John Ye"
+    }
+  ]
 }
 ```
 
-The 'DELETE' method delete an appointment: http://localhost:8080/api/appointments/id/
+DELETE http://localhost:8080/api/appointments/<id>
+Replace <id> with the appointment’s unique ID.
 
-To remove an appointment from the system, you only need the technician's unique ID. Substitute id in the URL with the actual ID of the appointment. 
-
-
-```python
-Example Response Returned:
+```
 {
-	"message": "Appointment has been deleted."
+  "message": "Appointment has been deleted."
 }
 ```
 
@@ -178,14 +153,13 @@ Example Response Returned:
 ## Sales microservice
 
 The Sales microservice contains 4 Models;
-AutomobileVO, which takes the vin and the sold property from the Inventory model "Automobile",
-Customer, which is used to demonstate a potential customer for purchasing a vehicle,
-Salesperson, which represents the staff that is making a sale on the vehicles on the lot,
-Sale, which is used to keep track of sales that have occurred.
+AutomobileVO, which takes the VIN and the sold property from the Inventory model "Automobile",
+Customer, which is used to demonstrate a potential customer for purchasing a vehicle,
+Salesperson, who represents the staff that is making a sale on the vehicles on the lot,
+Sales are used to keep track of sales that have occurred.
 
-AutomobileVO is updated by the poller, which pulls the VIN and "Sold" factor from the Automobiles in inventory every 60 seconds.
 
-If you are using Insomnia, here are all of the directly possible methods that can be used with the views inside of the Sales microservice (otherwise these are completed using the front-end interface):
+### Sales API Endpoints
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
@@ -199,10 +173,33 @@ If you are using Insomnia, here are all of the directly possible methods that ca
 | Create a Sale | POST | `http://localhost:8090/api/sales/`
 | Delete a Specific Sale | DELETE | `http://localhost:8090/api/sales/<id>/`
 
-Please be aware that the Delete functions have not yet been implemented into the code for the front-end.
 
-In order to submit a Create, please follow the following guidelines (when using a JSON BODY):
-Create Customer:
+### The Customer API supports three operations:
+
+GET http://localhost:8090/api/customers/
+No request body required.
+Example Response:
+```
+[
+  {
+    "id": 4,
+    "first_name": "Josh",
+    "last_name": "Elder",
+    "address": "69420 Capitol Hill, Seattle, WA 98102",
+    "phone_number": "1231231234"
+  },
+  {
+    "id": 5,
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "address": "123 Main St, New York, NY 10001",
+    "phone_number": "5555555555"
+  }
+]
+```
+
+To create a customer:
+POST http://localhost:8090/api/customers/
 ```python
 {
 	"first_name": "Josh",
@@ -211,8 +208,19 @@ Create Customer:
 	"phone_number": "1231231234"
 }
 ```
-The return value will be the same as the input with the addition of an "id" property.
+Created a Customer Response:
+```python
+{
+  "id": 4,
+  "first_name": "Josh",
+  "last_name": "Elder",
+  "address": "69420 Capitol Hill, Seattle, WA 98102",
+  "phone_number": "1231231234"
+}
+```
 
+
+To create a salesperson:
 ```python
 Create Salesperson:
 {
@@ -220,8 +228,59 @@ Create Salesperson:
 	"last_name": "Ascher",
 	"employee_id": "jascher"
 }
-The employee_id consists of the first name inital, followed by the last name in lowercase. The return value will be the same as the input, with the addition of an "id" property.
 ```
+Created a Salesperson Response:
+```python 
+{
+  "id": 5,
+  "first_name": "Jaik",
+  "last_name": "Ascher",
+  "employee_id": "jascher"
+}
+```
+
+DELETE http://localhost:8090/api/customers/4/
+Replace 4 with the actual customer ID you wish to delete.
+Example Response:
+```
+{
+  "message": "Customer has been deleted"
+}
+```
+
+Get a List of Sales
+GET http://localhost:8090/api/sales/
+No request body required.
+Example Response:
+```
+[
+  {
+    "id": 16,
+    "price": 1000000,
+    "automobile": {
+      "id": 4,
+      "vin": "1D7HA18N33J33J665",
+      "sold": false
+    },
+    "salesperson": {
+      "id": 5,
+      "first_name": "Jaik",
+      "last_name": "Ascher",
+      "employee_id": "jascher"
+    },
+    "customer": {
+      "id": 4,
+      "first_name": "Josh",
+      "last_name": "Elder",
+      "address": "69420 Capitol Hill, Seattle, WA 98102",
+      "phone_number": "1231231234"
+    }
+  }
+]
+```
+
+To create a sale: 
+POST http://localhost:8090/api/sales/
 ```python
 Create a Sale:
 {
@@ -231,32 +290,42 @@ Create a Sale:
 	"customer": "Josh"
 }
 ```
-Please be aware, that these parameters are specifically the Automobile VIN (17 Characters), the Salesperson Employee ID, Price, and the Customer's First Name.
-
+Created a Sale Response:
 ```python
-The resulting output:
 {
-	"id": 16,
-	"price": 1000000,
-	"automobile": {
-		"id": 4,
-		"vin": "1D7HA18N33J33J665",
-		"sold": false
-	},
-	"salesperson": {
-		"id": 5,
-		"first_name": "Jaik",
-		"last_name": "Ascher",
-		"employee_id": "jascher"
-	},
-	"customer": {
-		"id": 4,
-		"first_name": "Josh",
-		"last_name": "Elder",
-		"address": "69420 Capitol Hill, Seattle, WA 98102",
-		"phone_number": "1231231234"
-	}
+  "id": 16,
+  "price": 1000000,
+  "automobile": {
+    "id": 4,
+    "vin": "1D7HA18N33J33J665",
+    "sold": false
+  },
+  "salesperson": {
+    "id": 5,
+    "first_name": "Jaik",
+    "last_name": "Ascher",
+    "employee_id": "jascher"
+  },
+  "customer": {
+    "id": 4,
+    "first_name": "Josh",
+    "last_name": "Elder",
+    "address": "69420 Capitol Hill, Seattle, WA 98102",
+    "phone_number": "1231231234"
+  }
+```
+
+Delete a Sale
+DELETE http://localhost:8090/api/sales/16/
+Replace 16 with the actual sale ID you want to delete.
+
+Example Response:
+```
+{
+  "message": "Sale has been deleted"
 }
 ```
 
-For deleting any of these, simply add the id of that particular sale, salesperson, or customer to the end of your url, and submit as a DELETE request.
+
+
+

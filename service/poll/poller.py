@@ -9,8 +9,6 @@ sys.path.append("")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "service_project.settings")
 django.setup()
 
-# Import models from service_rest, here. Ignore vs-code error hinting
-# from service_rest.models import Something
 from service_rest.models import AutomobileVO
 
 
@@ -34,17 +32,12 @@ def get_automobiles():
 def poll(repeat=True):
     while True:
         try:
-            # Write your polling logic, here
-            # Do not copy entire file
             get_automobiles()
-
         except Exception as e:
             print(e, file=sys.stderr)
-
         if (not repeat):
             break
-
-        time.sleep(60)
+        time.sleep(int(os.environ.get("POLL_INTERVAL", 60)))
 
 
 if __name__ == "__main__":
