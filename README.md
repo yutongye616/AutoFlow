@@ -1,6 +1,6 @@
 # AutoFlow
 
-AutoFlow is an application that handles both the services and sales aspect of an automotive service and sales center. CarCar manages the aspects of Automobile Inventory (Including Make, Model, and VIN) as well as the Service Appointments, Technicians, Customers, Sales, Salespeople, and the Customers who purchased vehicles.
+AutoFlow is an application that manages both the service and sales operations of an automotive service and sales center. It handles automobile inventory—including make, model, and VIN—as well as service appointments, technicians, customers, sales transactions, salespeople, and vehicle purchase records.
 
 #### Team:
 
