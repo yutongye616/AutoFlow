@@ -26,6 +26,84 @@ docker compose up
 
 ### Project Diagram
 
+
+---
+
+### 🔹 Frontend (React)
+
+The frontend is built with **React** and serves as the unified user interface for inventory management, service scheduling, and sales operations.  
+It communicates with backend services exclusively through **RESTful JSON APIs**, ensuring a clean separation of concerns.
+
+---
+
+### 🔹 Inventory Microservice (Source of Truth)
+
+The **Inventory microservice** owns all vehicle-related data and serves as the **source of truth** for:
+
+- Automobiles (VIN)
+- Manufacturers
+- Models
+- Sold status
+
+It exposes read-only endpoints that allow other services to retrieve VIN and sold information without directly coupling to the inventory database.
+
+**Database:** Inventory DB  
+**Responsibility:** Vehicle lifecycle and availability
+
+---
+
+### 🔹 Service Microservice
+
+The **Service microservice** manages all service-related operations, including:
+
+- Service appointments
+- Technicians
+- Service history
+
+It maintains a local read-only copy of vehicle VIN data using a **polling mechanism** that periodically fetches VIN information from the Inventory microservice. This design enables **eventual consistency** while preserving service autonomy.
+
+**Database:** Service DB  
+**Responsibility:** Scheduling, technicians, and service records
+
+---
+
+### 🔹 Sales Microservice
+
+The **Sales microservice** manages the vehicle sales workflow, including:
+
+- Customers
+- Salespeople
+- Sales transactions
+
+Similar to the Service microservice, it uses a **poller** to retrieve VIN and sold status data from the Inventory microservice, ensuring sales logic remains decoupled from inventory ownership.
+
+**Database:** Sales DB  
+**Responsibility:** Customer management and sales transactions
+
+---
+
+### 🔹 Data Synchronization Strategy
+
+- Inventory is the **single source of truth** for vehicle data.
+- Service and Sales microservices maintain **local value objects (VOs)** for VIN and sold status.
+- Pollers run at scheduled intervals to synchronize data.
+- This design supports **loose coupling**, **scalability**, and **fault isolation**.
+
+---
+
+### 🔹 Architectural Principles
+
+- Microservices with independent databases
+- RESTful API communication
+- Eventual consistency via polling
+- Clear data ownership boundaries
+- Frontend-backend separation
+
+---
+
+This architecture mirrors real-world distributed systems used in production environments and demonstrates a strong understanding of microservice design tradeoffs.
+
+
 ![Car Car Diagram](ProjectBeta.png)
 
 ## Service microservice
