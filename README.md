@@ -43,7 +43,7 @@ It communicates with backend services exclusively through **RESTful JSON APIs**,
 
 ---
 
-### 🔹 Inventory Microservice (Source of Truth)
+### 🔹 Inventory Microservice (Single Source of Truth)
 
 The **Inventory microservice** owns all vehicle-related data and serves as the **source of truth** for:
 
