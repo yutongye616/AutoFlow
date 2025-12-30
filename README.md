@@ -9,7 +9,7 @@ AutoFlow is an application that manages both the service and sales operations of
 
 #### Project Set up 💻
 
-1.Fork the repo at https://gitlab.com/GabrielWickert/project-beta
+1.Fork the repo at https://github.com/yutongye616/AutoFlow.git
 
 2.Clone your fork to your projects directory.
 
