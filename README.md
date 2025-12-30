@@ -27,6 +27,13 @@ docker compose up
 ### Project Diagram
 
 
+<img
+  width="900"
+  alt="System Architecture Diagram"
+  src="https://github.com/user-attachments/assets/c2474f78-e73e-4288-9c2b-49b3f7ff9113"
+/>
+
+
 ---
 
 ### 🔹 Frontend (React)
@@ -100,14 +107,6 @@ Similar to the Service microservice, it uses a **poller** to retrieve VIN and so
 - Frontend-backend separation
 
 ---
-
-<img
-  width="900"
-  alt="System Architecture Diagram"
-  src="https://github.com/user-attachments/assets/c2474f78-e73e-4288-9c2b-49b3f7ff9113"
-/>
-
-
 
 ## Service microservice
 
