@@ -1,6 +1,6 @@
 # AutoFlow
 
-CarCar is an application that handles both the services and sales aspect of an automotive service and sales center. CarCar manages the aspects of Automobile Inventory (Including Make, Model, and VIN) as well as the Service Appointments, Technicians, Customers, Sales, Salespeople, and the Customers who purchased vehicles.
+AutoFlow is an application that handles both the services and sales aspect of an automotive service and sales center. CarCar manages the aspects of Automobile Inventory (Including Make, Model, and VIN) as well as the Service Appointments, Technicians, Customers, Sales, Salespeople, and the Customers who purchased vehicles.
 
 #### Team:
 
@@ -103,8 +103,8 @@ Similar to the Service microservice, it uses a **poller** to retrieve VIN and so
 
 This architecture mirrors real-world distributed systems used in production environments and demonstrates a strong understanding of microservice design tradeoffs.
 
+<img width="482" height="301" alt="diagram" src="https://github.com/user-attachments/assets/c2474f78-e73e-4288-9c2b-49b3f7ff9113" />
 
-![Car Car Diagram](ProjectBeta.png)
 
 ## Service microservice
 
