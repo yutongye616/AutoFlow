@@ -101,8 +101,6 @@ Similar to the Service microservice, it uses a **poller** to retrieve VIN and so
 
 ---
 
-This architecture mirrors real-world distributed systems used in production environments and demonstrates a strong understanding of microservice design tradeoffs.
-
 <img
   width="900"
   alt="System Architecture Diagram"
