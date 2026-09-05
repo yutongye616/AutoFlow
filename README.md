@@ -1,6 +1,6 @@
-# CarCar 🚗
+# AutoFlow 🚗
 
-CarCar is an application that handles both the service and sales side of an automotive service and sales center. It manages Automobile Inventory (make, model, and VIN), Service Appointments, Technicians, and the Customers, Salespeople, and Sales tied to vehicle purchases.
+AutoFlow is an application that handles both the service and sales side of an automotive service and sales center. It manages Automobile Inventory (make, model, and VIN), Service Appointments, Technicians, and the Customers, Salespeople, and Sales tied to vehicle purchases.
 
 ## Table of Contents
 
@@ -22,7 +22,7 @@ CarCar is an application that handles both the service and sales side of an auto
 
 ## Project Setup 💻
 
-1. Fork the repo at https://github.com/IreneYee/CarCar
+1. Fork the repo at https://github.com/yutongye616/AutoFlow
 2. Clone your fork to your projects directory.
 3. Change directory into the repository directory.
 4. Run the following commands to set up the Docker environment:
@@ -37,7 +37,7 @@ CarCar is an application that handles both the service and sales side of an auto
 
 ## Project Diagram
 
-![Car Car Diagram](ProjectBeta.png)
+![AutoFlow Diagram](ProjectBeta.png)
 
 ## Service Microservice
 
