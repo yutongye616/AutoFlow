@@ -13,6 +13,16 @@ function VehicleModelList() {
     }
 
 
+    const handleDelete = async (id) => {
+        const response = await fetch(`http://localhost:8100/api/models/${id}/`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            setModels((prevModels) => prevModels.filter((model) => model.id !== id));
+        }
+    }
+
     useEffect(()=>{
         getData()
     }, [])
@@ -25,6 +35,7 @@ function VehicleModelList() {
                 <th>Name</th>
                 <th>Manufacturer</th>
                 <th>Picture</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -41,6 +52,14 @@ function VehicleModelList() {
                                 style={{ maxWidth: '100px', maxHeight: '100px' }}
                             />
                         )}
+                    </td>
+                    <td>
+                        <button
+                            className="btn btn-danger"
+                            onClick={() => handleDelete(model.id)}
+                        >
+                            Delete
+                        </button>
                     </td>
                 </tr>
                 );
