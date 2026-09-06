@@ -21,6 +21,7 @@ function TechForm() {
         const response = await fetch('http://localhost:8080/api/technicians/');
     }
     const handleSubmit = async (event) => {
+        event.preventDefault();
         const data ={
             first_name,
             last_name,

@@ -45,6 +45,7 @@ function ServForm() {
     const [submittedAuto, setSubmittedAuto] = useState(false);
 
     const handleSubmit = async (event) => {
+      event.preventDefault();
       const data = {
         vin,
         customer,
