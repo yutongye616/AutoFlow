@@ -16,6 +16,16 @@ function TechList() {
         getData()
     }, [])
 
+    const handleDelete = async (id) => {
+        const response = await fetch(`http://localhost:8080/api/technicians/${id}/`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            setTech((prevTechs) => prevTechs.filter((tech) => tech.id !== id));
+        }
+    }
+
     return (
         <div className="row">
         <div className="offset-3 col-6">
@@ -27,6 +37,7 @@ function TechList() {
                     <th>Employee ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +48,14 @@ function TechList() {
                         <td>{ tech.employee_id } </td>
                         <td>{ tech.first_name } </td>
                         <td>{ tech.last_name } </td>
+                        <td>
+                            <button
+                                className="btn btn-danger"
+                                onClick={() => handleDelete(tech.id)}
+                            >
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                     );
                 })
