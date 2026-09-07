@@ -13,6 +13,16 @@ function CustomerList() {
     }
 
 
+    const handleDelete = async (id) => {
+        const response = await fetch(`http://localhost:8090/api/customers/${id}/`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            setCustomers((prevCustomers) => prevCustomers.filter((customer) => customer.id !== id));
+        }
+    }
+
     useEffect(()=>{
         getData()
     }, [])
@@ -25,6 +35,7 @@ function CustomerList() {
                 <th>Name</th>
                 <th>Address</th>
                 <th>Phone Number</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -34,6 +45,14 @@ function CustomerList() {
                     <td>{ customer.first_name } { customer.last_name }</td>
                     <td>{ customer.address }</td>
                     <td>{ customer.phone_number }</td>
+                    <td>
+                        <button
+                            className="btn btn-danger"
+                            onClick={() => handleDelete(customer.id)}
+                        >
+                            Delete
+                        </button>
+                    </td>
                 </tr>
                 );
             })}
