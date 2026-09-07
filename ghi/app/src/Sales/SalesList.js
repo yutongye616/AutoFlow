@@ -37,6 +37,16 @@ function SalesList() {
         setSelectedSalesperson(value);
     }
 
+    const handleDelete = async (id) => {
+        const response = await fetch(`http://localhost:8090/api/sales/${id}/`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            setSales((prevSales) => prevSales.filter((sale) => sale.id !== id));
+        }
+    }
+
     return (
         <div>
             <h1>Sales</h1>
@@ -65,6 +75,7 @@ function SalesList() {
                         <th>Customer</th>
                         <th>VIN</th>
                         <th>Price</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +86,14 @@ function SalesList() {
                             <td>{sale.customer.first_name} {sale.customer.last_name}</td>
                             <td>{sale.automobile.vin}</td>
                             <td>${sale.price}</td>
+                            <td>
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={() => handleDelete(sale.id)}
+                                >
+                                    Delete
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
