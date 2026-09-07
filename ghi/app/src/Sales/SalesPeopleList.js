@@ -14,6 +14,16 @@ function SalesPeopleList() {
     }
 
 
+    const handleDelete = async (id) => {
+        const response = await fetch(`http://localhost:8090/api/salespeople/${id}/`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            setSalespeople((prevSalespeople) => prevSalespeople.filter((salesperson) => salesperson.id !== id));
+        }
+    }
+
     useEffect(()=>{
         getData()
     }, [])
@@ -25,6 +35,7 @@ function SalesPeopleList() {
             <tr>
                 <th>Name</th>
                 <th>Employee ID</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -33,6 +44,14 @@ function SalesPeopleList() {
                 <tr key={salesperson.id}>
                     <td>{ salesperson.first_name } { salesperson.last_name }</td>
                     <td>{ salesperson.employee_id }</td>
+                    <td>
+                        <button
+                            className="btn btn-danger"
+                            onClick={() => handleDelete(salesperson.id)}
+                        >
+                            Delete
+                        </button>
+                    </td>
                 </tr>
                 );
             })}
