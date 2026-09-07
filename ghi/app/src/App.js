@@ -23,8 +23,9 @@ import AutomobileList from './Inventory/AutoList';
 function App() {
   return (
     <BrowserRouter>
+      <div className="d-flex" style={{ minHeight: '100vh' }}>
       <Nav />
-      <div className="container">
+      <div className="container-fluid p-4">
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/api/customers/" element={<CustomerList />} />
@@ -52,6 +53,7 @@ function App() {
           </Route>
         </Routes>
 
+      </div>
       </div>
     </BrowserRouter>
   );
