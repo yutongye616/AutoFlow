@@ -28,6 +28,18 @@ function ServHist() {
     );
   }, [searchVin, appointments]);
 
+  const handleDelete = async (id) => {
+    const response = await fetch(`http://localhost:8080/api/appointments/${id}/`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      setAppointments((prevAppointments) =>
+        prevAppointments.filter((appointment) => appointment.id !== id)
+      );
+    }
+  };
+
 
   return (
     <div className="row">
@@ -55,6 +67,7 @@ function ServHist() {
                     <th>Technician</th>
                     <th>Reason</th>
                     <th>Status</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -73,6 +86,14 @@ function ServHist() {
                             <td> { appointment.techname } </td>
                             <td> { appointment.service_reason } </td>
                             <td> { appointment.status } </td>
+                            <td>
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={() => handleDelete(appointment.id)}
+                                >
+                                    Delete
+                                </button>
+                            </td>
                         </tr>
                     );
                 })}
