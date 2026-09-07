@@ -25,7 +25,7 @@ function App() {
     <BrowserRouter>
       <div className="d-flex" style={{ minHeight: '100vh' }}>
       <Nav />
-      <div className="container-fluid p-4">
+      <div className="content-area">
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/api/customers/" element={<CustomerList />} />

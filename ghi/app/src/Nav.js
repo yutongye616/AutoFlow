@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 function Nav() {
   return (
-    <nav className="d-flex flex-column flex-shrink-0 p-3 bg-success text-white sidebar">
+    <nav className="d-flex flex-column flex-shrink-0 p-3 text-white sidebar">
       <NavLink to="/" className="d-flex align-items-center mb-3 text-white text-decoration-none">
         <span className="fs-4 fw-bold">AutoFlow</span>
       </NavLink>
