@@ -18,6 +18,15 @@ function AutomobileList() {
         getData()
     }, []);
 
+    const handleDelete = async (vin) => {
+        const response = await fetch(`http://localhost:8100/api/automobiles/${vin}/`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            setAuto((prevAutos) => prevAutos.filter((auto) => auto.vin !== vin));
+        }
+    }
 
     return (
         <div className="row">
@@ -33,6 +42,7 @@ function AutomobileList() {
                     <th>Model</th>
                     <th>Manufacturer</th>
                     <th>Sold</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -46,6 +56,14 @@ function AutomobileList() {
                             <td> { autos.model.name } </td>
                             <td> { autos.model.manufacturer.name } </td>
                             <td> { autos.sold ? 'Yes' : 'No' } </td>
+                            <td>
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={() => handleDelete(autos.vin)}
+                                >
+                                    Delete
+                                </button>
+                            </td>
                         </tr>
                     );
                 })}
