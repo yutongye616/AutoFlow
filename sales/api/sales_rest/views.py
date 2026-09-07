@@ -177,5 +177,5 @@ def api_show_sale(request, pk):
            safe=False,
        )
    else:
-      sale.delete()
-      return JsonResponse({"message": "Sale deleted"})
+      count, _ = Sale.objects.filter(id=pk).delete()
+      return JsonResponse({"deleted": count > 0})
